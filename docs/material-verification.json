@@ -1,0 +1,51 @@
+{
+  "sourceSHA256": "1df42107a7e19d0dbde068a0fc0c6f80395cacc68293106d97addf6129e95321",
+  "outputSHA256": "9930ceaf7efb90ed0c6b8c73db3b991b6963b5c5083151cd5f89027d1d84aaa5",
+  "vertices": 175288,
+  "triangles": 262730,
+  "positionsNormalsUVsByteIdentical": true,
+  "orientedTriangleMultisetIdentical": true,
+  "sourceTexturesBytesPreserved": true,
+  "vertexColors": false,
+  "materials": [
+    {
+      "name": "Titanium satin frame",
+      "baseColorSRGB": "#929590",
+      "triangles": 106911,
+      "roughness": 0.42,
+      "metalness": 0.85
+    },
+    {
+      "name": "Polished silver temples",
+      "baseColorSRGB": "#B8BBB6",
+      "triangles": 42408,
+      "roughness": 0.28,
+      "metalness": 0.9
+    },
+    {
+      "name": "Matte charcoal rubber",
+      "baseColorSRGB": "#181A19",
+      "triangles": 52621,
+      "roughness": 0.85,
+      "metalness": 0
+    },
+    {
+      "name": "Graphite hinge hardware",
+      "baseColorSRGB": "#252826",
+      "triangles": 2523,
+      "roughness": 0.4,
+      "metalness": 0.55
+    },
+    {
+      "name": "Ocean blue optical coating",
+      "baseColorSRGB": "#244D7C",
+      "triangles": 58267,
+      "roughness": 0.19,
+      "metalness": 0.18
+    }
+  ],
+  "normalMap": "Original embedded 2048px map unchanged and active for all five materials",
+  "baseColorTexture": "Disconnected: original baked highlights and discoloration conflict with uniform specified base colors. Original bytes retained.",
+  "metallicRoughnessTexture": "Disconnected: a single baked map mixed regional metalness and roughness, including zero-roughness areas; replaced with explicit uniform per-material scalar values. Original bytes retained.",
+  "uncertainty": "Hinge and nose pad boundaries inferred from original UV color connected regions and geometry; source has no authored semantic labels."
+}

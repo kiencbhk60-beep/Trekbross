@@ -1,0 +1,54 @@
+{
+  "binaryChunkByteIdentical": true,
+  "otherFourMaterialsUnchanged": true,
+  "baseColorUnchanged": "#244D7C",
+  "lens": {
+    "name": "Ocean blue optical coating",
+    "doubleSided": false,
+    "normalTexture": {
+      "index": 0
+    },
+    "pbrMetallicRoughness": {
+      "baseColorFactor": [
+        0.017641954488384078,
+        0.07421356838014963,
+        0.20155625379439707,
+        0.9
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.035
+    },
+    "extras": {
+      "baseColorSRGB": "#244D7C",
+      "segmentation": "connected geometric patches and original UV evidence"
+    },
+    "extensions": {
+      "KHR_materials_clearcoat": {
+        "clearcoatFactor": 0.25,
+        "clearcoatRoughnessFactor": 0.045
+      },
+      "KHR_materials_iridescence": {
+        "iridescenceFactor": 0.5,
+        "iridescenceIor": 1.38,
+        "iridescenceThicknessMinimum": 420,
+        "iridescenceThicknessMaximum": 420
+      },
+      "KHR_materials_transmission": {
+        "transmissionFactor": 0.94
+      },
+      "KHR_materials_ior": {
+        "ior": 1.65
+      },
+      "KHR_materials_specular": {
+        "specularFactor": 1,
+        "specularColorFactor": [
+          0.05,
+          1,
+          1
+        ]
+      }
+    },
+    "alphaMode": "BLEND"
+  },
+  "outputSha256": "5a03ea22e149c875ba80056865a07afc30fb085daa20ab0fa662235a31fe032a"
+}
