@@ -4,8 +4,6 @@ const SHOP_PRODUCT_MAP = {
   aurora: "K-05",
   suncrest: "K-03",
   ember: "K-06",
-  granite: "K-10",
-  wildtrail: "K-11",
   sandstone: "K-01",
   bluehour: "K-07"
 };
@@ -16,8 +14,6 @@ const products = {
   aurora: { code: SHOP_PRODUCT_MAP.aurora, name: "AURORA", image: "assets/aurora.webp", description: "Gọng bạc · Tròng chuyển sắc lục–tím", subtitle: "Một sắc trời khác trên mỗi cung đường.", category: "mountain" },
   suncrest: { code: SHOP_PRODUCT_MAP.suncrest, name: "SUNCREST", image: "assets/suncrest.webp", description: "Gọng xám · Tròng vàng–cam", subtitle: "Mang sắc nắng lên từng con dốc.", category: "mountain" },
   ember: { code: SHOP_PRODUCT_MAP.ember, name: "EMBER", image: "assets/ember.webp", description: "Gọng đen · Tròng cam–đỏ", subtitle: "Giữ lửa cho từng bước chạy.", category: "running" },
-  granite: { code: SHOP_PRODUCT_MAP.granite, name: "GRANITE", image: "assets/granite.webp", description: "Gọng xám than · Tròng tối", subtitle: "Sắc đá trầm, chất núi riêng.", category: "mountain" },
-  wildtrail: { code: SHOP_PRODUCT_MAP.wildtrail, name: "WILDTRAIL", image: "assets/wildtrail.webp", description: "Gọng cam–xanh rêu · Tròng xanh lam", subtitle: "Rẽ khỏi lối quen, tìm màu hoang dã.", category: "trekking" },
   sandstone: { code: SHOP_PRODUCT_MAP.sandstone, name: "SANDSTONE", image: "assets/sandstone.webp", description: "Gọng màu cát · Tròng chuyển sắc", subtitle: "Sắc đất ấm, bước chân đi xa.", category: "trekking" },
   bluehour: { code: SHOP_PRODUCT_MAP.bluehour, name: "BLUEHOUR", image: "assets/bluehour.webp", description: "Gọng đen · Tròng xanh dương", subtitle: "Bắt nhịp chạy, đón khoảng trời xanh.", category: "running" }
 };

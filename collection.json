@@ -39,22 +39,6 @@
     "subtitle": "Giữ lửa cho từng bước chạy.",
     "category": "running"
   },
-  "granite": {
-    "code": "K-10",
-    "name": "GRANITE",
-    "image": "assets/granite.webp",
-    "description": "Gọng xám than · Tròng tối",
-    "subtitle": "Sắc đá trầm, chất núi riêng.",
-    "category": "mountain"
-  },
-  "wildtrail": {
-    "code": "K-11",
-    "name": "WILDTRAIL",
-    "image": "assets/wildtrail.webp",
-    "description": "Gọng cam–xanh rêu · Tròng xanh lam",
-    "subtitle": "Rẽ khỏi lối quen, tìm màu hoang dã.",
-    "category": "trekking"
-  },
   "sandstone": {
     "code": "K-01",
     "name": "SANDSTONE",
