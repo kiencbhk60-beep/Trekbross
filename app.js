@@ -1,11 +1,13 @@
 const SHOP_PRODUCT_MAP = {
-  ridgeline: "K-08",
-  nightfall: "K-09",
-  aurora: "K-05",
-  suncrest: "K-03",
-  ember: "K-06",
   sandstone: "K-01",
-  bluehour: "K-07"
+  suncrest: "K-03",
+  ridgeline: "K-04",
+  aurora: "K-05",
+  ember: "K-06",
+  bluehour: "K-07",
+  nightfall: "K-09",
+  granite: "K-10",
+  wildtrail: "K-11"
 };
 
 const products = {
