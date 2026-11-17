@@ -55,13 +55,6 @@
     "subtitle": "Sắc đất ấm, bước chân đi xa.",
     "category": "trekking"
   },
-  "glacier": {
-    "name": "GLACIER",
-    "image": "assets/glacier.webp",
-    "description": "Gọng bạc · Tròng xanh lam",
-    "subtitle": "Một khoảng xanh giữa chặng chinh phục.",
-    "category": "mountain"
-  },
   "bluehour": {
     "name": "BLUEHOUR",
     "image": "assets/bluehour.webp",
