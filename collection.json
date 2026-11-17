@@ -1,5 +1,6 @@
 {
   "ridgeline": {
+    "code": "K-08",
     "name": "RIDGELINE",
     "image": "assets/ridgeline.webp",
     "description": "Gọng bạc · Tròng xanh lam–lục",
@@ -7,6 +8,7 @@
     "category": "trekking"
   },
   "nightfall": {
+    "code": "K-09",
     "name": "NIGHTFALL",
     "image": "assets/nightfall.webp",
     "description": "Gọng đen · Tròng tối",
@@ -14,6 +16,7 @@
     "category": "trekking"
   },
   "aurora": {
+    "code": "K-05",
     "name": "AURORA",
     "image": "assets/aurora.webp",
     "description": "Gọng bạc · Tròng chuyển sắc lục–tím",
@@ -21,6 +24,7 @@
     "category": "mountain"
   },
   "suncrest": {
+    "code": "K-03",
     "name": "SUNCREST",
     "image": "assets/suncrest.webp",
     "description": "Gọng xám · Tròng vàng–cam",
@@ -28,6 +32,7 @@
     "category": "mountain"
   },
   "ember": {
+    "code": "K-06",
     "name": "EMBER",
     "image": "assets/ember.webp",
     "description": "Gọng đen · Tròng cam–đỏ",
@@ -35,6 +40,7 @@
     "category": "running"
   },
   "granite": {
+    "code": "K-10",
     "name": "GRANITE",
     "image": "assets/granite.webp",
     "description": "Gọng xám than · Tròng tối",
@@ -42,6 +48,7 @@
     "category": "mountain"
   },
   "wildtrail": {
+    "code": "K-11",
     "name": "WILDTRAIL",
     "image": "assets/wildtrail.webp",
     "description": "Gọng cam–xanh rêu · Tròng xanh lam",
@@ -49,6 +56,7 @@
     "category": "trekking"
   },
   "sandstone": {
+    "code": "K-01",
     "name": "SANDSTONE",
     "image": "assets/sandstone.webp",
     "description": "Gọng màu cát · Tròng chuyển sắc",
@@ -56,6 +64,7 @@
     "category": "trekking"
   },
   "bluehour": {
+    "code": "K-07",
     "name": "BLUEHOUR",
     "image": "assets/bluehour.webp",
     "description": "Gọng đen · Tròng xanh dương",
