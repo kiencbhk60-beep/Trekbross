@@ -124,22 +124,8 @@
       tl.fromTo(el, { opacity: 0, x: fx, y: fy }, { opacity: 1, duration: IN });
       tl.to(el, { x: tx, y: ty, duration: MOVE }, "<");
       tl.to(img, { opacity: 0, scale: SCALE, duration: OUT });
+      tl.set(el, { opacity: 0 });
     }
-
-    // Intro fan-out across the 11 Hero Collage images on initial load
-    gsap.delayedCall(0.55, () => {
-      rect = wrap.getBoundingClientRect();
-      const cw = rect.width || window.innerWidth;
-      const ch = rect.height || window.innerHeight;
-      items.forEach((_, idx) => {
-        const angle = (idx / items.length) * Math.PI * 1.65 - 0.4;
-        const rx = cw * 0.5 + Math.cos(angle) * (cw * 0.24);
-        const ry = ch * 0.46 + Math.sin(angle) * (ch * 0.18);
-        gsap.delayedCall(idx * 0.09, () => {
-          if (!over) spawn(cw * 0.5, ch * 0.46, rx, ry);
-        });
-      });
-    });
 
     if (typeof window.Observer !== "undefined") {
       Observer.create({

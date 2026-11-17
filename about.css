@@ -6366,14 +6366,14 @@ figcaption {
 
 
 /* ==========================================================================
-   TREKKBROSS ABOUT US — VIETNAMESE TYPOGRAPHY & RESPONSIVE OVERRIDES
+   TREKKBROSS ABOUT US — FULL-WIDTH LUMENIS LAYOUT & VIETNAMESE TYPOGRAPHY
    ========================================================================== */
 @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@500;600;700&display=swap");
 
 :root {
   --_typrography---fonts--heading-font: "Be Vietnam Pro", "TASA Orbiter", sans-serif;
   --_typrography---fonts--paragraph-font: "Be Vietnam Pro", Inter, sans-serif;
-  --_typrography---fonts--logo-font: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --_typrography---fonts--logo-font: "Oswald Variable", "Oswald", "Arial Narrow", Arial, sans-serif;
 }
 
 html, body {
@@ -6384,26 +6384,34 @@ html, body {
   scroll-behavior: smooth;
 }
 
-/* Navbar Brand & Mobile Menu */
+/* Ensure .container is ALWAYS 100% full viewport width like ovo-lumenis.webflow.io */
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Navbar Brand */
 .brand-wordmark {
   font-family: var(--_typrography---fonts--logo-font);
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: -0.03em;
   color: #000;
   text-decoration: none;
   line-height: 1;
   display: inline-flex;
   align-items: center;
+  text-transform: uppercase;
 }
 .brand-wordmark span {
   color: #ef4d25;
 }
 
 .navbar.w-nav {
-  background-color: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+  background-color: var(--tokens--background-base);
 }
 
 .nav-line {
@@ -6412,57 +6420,101 @@ html, body {
   width: 0%;
 }
 
-/* Hero Wordmark: 10 characters "TREKKBROSS" fitted cleanly without clipping */
+/* Hero Section — Exact full-viewport 100vh edge-to-edge layout like Lumenis */
 .hero {
-  min-height: 100vh;
-  height: auto;
-  padding-top: 96px;
-  padding-bottom: 48px;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  min-height: 680px;
+  position: relative;
+  display: block;
   overflow: hidden;
-  display: flex;
-  align-items: stretch;
 }
 
-.hero-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: calc(100vh - 144px);
+.container.hero-container {
+  width: 100%;
+  height: 100%;
   position: relative;
   z-index: 4;
 }
 
-.logo-holder {
+.hero-text-wrapper {
   width: 100%;
-  overflow: visible;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+.logo-holder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  row-gap: 14px;
+}
+
+/* Monumental condensed display wordmark matching Lumenis height & proportion */
 .logo-hero-text {
   font-family: var(--_typrography---fonts--logo-font);
-  font-size: clamp(46px, min(14.6vw, 192px), 192px);
-  line-height: 0.96;
+  font-size: clamp(46px, 16.8vw, 260px);
+  line-height: 1.02;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
-  margin-left: 0;
+  margin-left: -0.03em;
   white-space: nowrap;
   max-width: 100%;
   display: block;
 }
 
+.hero-links-holder {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.hero-paragraph-holder.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 70px;
+  grid-row-gap: 40px;
+  align-items: end;
+}
+
+#w-node-ba638e9e-8727-4279-6bf0-e31c14f7e2d2-270150cb {
+  justify-self: end;
+}
+
+/* Hero Mouse Trail Images — NO box-shadow or background on wrapper so faded images leave zero trace */
+.image_wrap {
+  z-index: 1;
+  pointer-events: none;
+  position: absolute;
+  inset: 0%;
+}
+
 .content_img-wrap {
-  width: 210px;
-  height: 270px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  width: 220px;
+  height: 280px;
+  position: absolute;
+  bottom: auto;
+  right: auto;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
   pointer-events: none;
 }
 
 .content_img {
+  object-fit: cover;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  position: absolute;
 }
 
 /* Button structure */
@@ -6471,25 +6523,31 @@ html, body {
   position: relative;
   cursor: pointer;
 }
-.button-text-holder {
-  height: 22px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.button-text {
-  line-height: 22px;
-  white-space: nowrap;
+
+/* Section 02: About TREKKBROSS — Wide edge-to-edge Lumenis layout */
+.grid-title {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-column-gap: 70px;
+  grid-row-gap: 40px;
+  place-items: end;
 }
 
-/* Section 02: About Story Layout */
+.grid-title-right {
+  justify-self: end;
+  text-align: right;
+  max-width: 540px;
+}
+
 .about-story-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 48px;
-  margin-top: 40px;
-  padding-top: 40px;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 120px;
+  grid-row-gap: 40px;
+  margin-top: 56px;
+  padding-top: 48px;
   border-top: 1px solid var(--tokens--border);
   align-items: start;
 }
@@ -6497,20 +6555,24 @@ html, body {
 .about-story-copy {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
+  max-width: 680px;
 }
 
 .about-story-copy p {
   font-size: 18px;
-  line-height: 1.7;
+  line-height: 1.65;
   color: var(--tokens--text-secondary);
   margin: 0;
 }
 
 .about-highlight-box {
+  justify-self: end;
+  width: 100%;
+  max-width: 560px;
   background-color: var(--tokens--surface);
   border-left: 4px solid #000;
-  padding: 36px 32px;
+  padding: 40px 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6519,8 +6581,8 @@ html, body {
 
 .about-highlight-quote {
   font-family: var(--_typrography---fonts--heading-font);
-  font-size: clamp(28px, 3.2vw, 40px);
-  line-height: 1.18;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #000;
@@ -6550,12 +6612,13 @@ html, body {
 }
 
 .project-title-holder {
-  max-width: 420px;
+  justify-self: start;
+  max-width: 460px;
 }
 
 .project-title-holder h2.diffrence {
-  font-size: clamp(28px, 3.2vw, 44px);
-  line-height: 1.15;
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1.12;
   font-weight: 700;
   margin: 0 0 12px;
   text-transform: uppercase;
@@ -6571,6 +6634,10 @@ html, body {
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
+.project-category-wrapper {
+  justify-self: end;
+}
+
 .project-category-text {
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -6579,13 +6646,12 @@ html, body {
 /* Section 04: Sticky Services */
 .services {
   width: 100%;
-  border-radius: 12px;
 }
 
 .services-text-holder {
-  flex: 0 0 46%;
-  min-width: 380px;
-  padding: 64px 36px;
+  flex: 0 0 45%;
+  min-width: 420px;
+  padding: 64px 40px;
 }
 
 .services-text {
@@ -6594,8 +6660,8 @@ html, body {
 }
 
 .services-text .h2-style {
-  font-size: clamp(22px, 2.4vw, 34px);
-  line-height: 1.2;
+  font-size: clamp(22px, 2.5vw, 36px);
+  line-height: 1.18;
   font-weight: 700;
   margin-bottom: 8px;
   text-transform: uppercase;
@@ -6605,13 +6671,13 @@ html, body {
   color: rgba(255, 255, 255, 0.84);
   font-size: 15px;
   line-height: 1.6;
-  max-width: 400px;
+  max-width: 420px;
   margin: 0 auto;
 }
 
 .services-images-holder {
   flex: 1;
-  width: 54%;
+  width: 55%;
   height: 100%;
   overflow: hidden;
   position: relative;
@@ -6629,7 +6695,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 540px;
+  max-width: 560px;
 }
 
 .footer-cta-title {
@@ -6650,22 +6716,23 @@ html, body {
 }
 
 .footer-wordmark-bar {
-  margin-top: 48px;
-  padding-top: 32px;
+  width: 100%;
+  margin-top: 56px;
+  padding-top: 36px;
   border-top: 1px solid var(--tokens--border);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-align: center;
 }
 
 .footer-giant-word {
   font-family: var(--_typrography---fonts--logo-font);
-  font-size: clamp(44px, min(14vw, 180px), 180px);
-  line-height: 0.92;
+  font-size: clamp(44px, 16vw, 240px);
+  line-height: 0.94;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.05em;
   color: #000;
   text-transform: uppercase;
   white-space: nowrap;
@@ -6683,14 +6750,17 @@ html, body {
 /* Responsive Breakpoints: 1024px, 768px, 390px */
 @media screen and (max-width: 1024px) {
   .logo-hero-text {
-    font-size: clamp(42px, 14vw, 140px);
+    font-size: clamp(42px, 15.5vw, 165px);
   }
   .hero-content {
-    grid-column-gap: 48px;
+    grid-column-gap: 60px;
     grid-row-gap: 24px;
   }
+  .about-story-grid {
+    grid-column-gap: 48px;
+  }
   .services-text-holder {
-    min-width: 320px;
+    min-width: 340px;
     padding: 48px 24px;
   }
 }
@@ -6727,9 +6797,22 @@ html, body {
     align-items: flex-start;
     gap: 16px;
   }
+  .grid-title {
+    grid-template-columns: 1fr;
+    place-items: start;
+    grid-row-gap: 20px;
+  }
+  .grid-title-right {
+    justify-self: start;
+    text-align: left;
+  }
   .about-story-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+  .about-highlight-box {
+    justify-self: start;
+    max-width: 100%;
   }
   .project-main {
     grid-template-columns: 1fr;
@@ -6737,7 +6820,8 @@ html, body {
     text-align: center;
     justify-items: center;
   }
-  .project-title-holder {
+  .project-title-holder, .project-category-wrapper {
+    justify-self: center;
     max-width: 100%;
   }
   .project-main-image-holderr {
@@ -6762,11 +6846,13 @@ html, body {
 
 @media screen and (max-width: 767px) {
   .hero {
-    padding-top: 84px;
+    height: auto;
+    min-height: 100vh;
+    padding-top: 72px;
   }
   .logo-hero-text {
-    font-size: clamp(38px, 13.8vw, 96px);
-    letter-spacing: -0.03em;
+    font-size: clamp(38px, 15vw, 110px);
+    letter-spacing: -0.04em;
   }
   .hero-links-holder {
     flex-direction: column;
@@ -6779,7 +6865,10 @@ html, body {
   .hero-paragraph-holder.grid {
     grid-template-columns: 1fr;
     gap: 24px;
-    margin-top: 36px;
+    margin-top: 48px;
+  }
+  #w-node-ba638e9e-8727-4279-6bf0-e31c14f7e2d2-270150cb {
+    justify-self: start;
   }
   .project-list-item {
     height: auto;
@@ -6802,8 +6891,8 @@ html, body {
 
 @media screen and (max-width: 479px) {
   .logo-hero-text {
-    font-size: clamp(34px, 13.4vw, 64px);
-    letter-spacing: -0.025em;
+    font-size: clamp(34px, 14.5vw, 68px);
+    letter-spacing: -0.03em;
   }
   .about-highlight-box {
     padding: 24px 20px;
@@ -6818,7 +6907,7 @@ html, body {
     font-size: 13px;
   }
   .footer-giant-word {
-    font-size: clamp(32px, 13vw, 58px);
+    font-size: clamp(32px, 14vw, 64px);
   }
 }
 
