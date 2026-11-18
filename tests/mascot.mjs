@@ -5,7 +5,14 @@ import {EXPRESSION_BY_ID} from '../vendor/bloub/expressions.js';
 import {SHAPE_BY_ID} from '../vendor/bloub/skins.js';
 
 const core = readFileSync(new URL('../mascot-core.js', import.meta.url), 'utf8');
-const {REACTIONS, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} = await import('data:text/javascript;base64,' + Buffer.from(core).toString('base64'));
+const {REACTIONS, IDLE_DELAY, IDLE_SEQUENCE, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} = await import('data:text/javascript;base64,' + Buffer.from(core).toString('base64'));
+assert.equal(IDLE_DELAY,8000);
+assert.deepEqual(IDLE_SEQUENCE.map(step=>step.state),['wink','thinking','wide']);
+for (const step of IDLE_SEQUENCE) {
+  const frame=new BotEngine(100,step.state,SHAPE_BY_ID.get('cercle').radii,EXPRESSION_BY_ID.get('neutre')).sample(1.2);
+  assert(!/NaN|Infinity/.test(frame.bodyPath));
+  if(step.state==='thinking')assert(frame.dots.length>0,'Thinking includes its satellite dots');
+}
 for (const width of [320, 375, 390, 430, 1440]) {
   const size = width > 600 ? 84 : 68;
   const bounds = viewportBounds(width, 568, size);

@@ -3,20 +3,21 @@ import {BotEngine} from './vendor/bloub/engine.js';
 import {EXPRESSION_BY_ID} from './vendor/bloub/expressions.js';
 import {SHAPE_BY_ID} from './vendor/bloub/skins.js';
 import {RAYON} from './vendor/bloub/repere.js';
-import {REACTIONS, POSITION_KEY, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} from './mascot-core.js';
+import {REACTIONS, POSITION_KEY, IDLE_DELAY, IDLE_SEQUENCE, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} from './mascot-core.js?v=20261118-2';
 
 if (!document.getElementById('trek-mascot')) {
   const root = document.createElement('aside');
   root.id = 'trek-mascot';
   root.setAttribute('aria-label', 'Bross, bạn đồng hành TREKKBROSS');
   root.innerHTML = `<button class="trek-mascot-body" type="button" aria-label="Mascot Bross. Kéo hoặc dùng phím mũi tên để di chuyển. Nhấn để chào." title="Kéo để di chuyển · Phím mũi tên để dịch chuyển · Home để đặt lại">
-    <svg viewBox="-112 -112 224 224" aria-hidden="true"><defs><clipPath id="bross-eye-clip"><circle r="100"/></clipPath></defs><circle r="100" fill="#ff6a00"/><g fill="#111111" clip-path="url(#bross-eye-clip)"><path data-eye="0"/><path data-eye="1"/></g></svg>
+    <svg viewBox="-112 -112 224 224" aria-hidden="true"><defs><clipPath id="bross-eye-clip"><circle r="100"/></clipPath></defs><path data-body fill="#ff6a00"/><g fill="#111111" clip-path="url(#bross-eye-clip)"><path data-eye="0"/><path data-eye="1"/></g><g data-dots fill="#ff6a00"/></svg>
   </button><span class="trek-mascot-bubble" aria-hidden="true"></span><span class="trek-mascot-sr" role="status" aria-live="polite" aria-atomic="true"></span>`;
   document.body.append(root);
   const button = root.querySelector('button');
   const bubble = root.querySelector('.trek-mascot-bubble');
   const announcement = root.querySelector('[role=status]');
   const eyeNodes = [...root.querySelectorAll('[data-eye]')];
+  const bodyNode = root.querySelector('[data-body]'), dotsNode = root.querySelector('[data-dots]');
   const reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
   const shape = SHAPE_BY_ID.get('cercle').radii;
   let expression = 'neutre';
@@ -24,9 +25,16 @@ if (!document.getElementById('trek-mascot')) {
   let clock = 1, last = 0, lastDraw = 0, raf = 0, reactionTimer, positionFrame = 0;
   let reduced = false, locked = false, drag = null, suppressClick = false, dockVersion = 0;
   let bounds, position, greetingIndex = 0;
+  let visualState = 'idle', idleTimer, idling = false, reactionUntil = 0;
+  root.dataset.state='idle';
 
   function draw() {
     const frame = engine.sample(clock);
+    bodyNode.setAttribute('d', frame.bodyPath);
+    bodyNode.setAttribute('opacity', String(frame.bodyAlpha));
+    while (dotsNode.childElementCount < frame.dots.length) dotsNode.append(document.createElementNS('http://www.w3.org/2000/svg','circle'));
+    while (dotsNode.childElementCount > frame.dots.length) dotsNode.lastElementChild.remove();
+    frame.dots.forEach((dot,index)=>{const node=dotsNode.children[index];node.setAttribute('cx',dot.x);node.setAttribute('cy',dot.y);node.setAttribute('r',dot.r);node.setAttribute('opacity',dot.opacity);});
     eyeNodes.forEach((node, index) => {
       const eye = frame.eyes[index];
       node.setAttribute('d', eye?.d || '');
@@ -44,8 +52,8 @@ if (!document.getElementById('trek-mascot')) {
     reduced = reducedQuery.matches || document.documentElement.classList.contains('motion-paused');
     cancelAnimationFrame(raf);
     if (reduced) {
-      engine = new BotEngine(RAYON, 'idle', shape, EXPRESSION_BY_ID.get(expression));
-      clock = 1;
+      engine = new BotEngine(RAYON, visualState, shape, EXPRESSION_BY_ID.get(expression));
+      clock = visualState === 'idle' ? 1 : 1.2;
     }
     draw();
     if (!reduced && !document.hidden && !document.documentElement.classList.contains('intro-pending')) { last = 0; raf = requestAnimationFrame(tick); }
@@ -54,14 +62,16 @@ if (!document.getElementById('trek-mascot')) {
     expression = EXPRESSION_BY_ID.has(id) ? id : 'neutre';
     root.dataset.expression = expression;
     if (reduced) {
-      engine = new BotEngine(RAYON, 'idle', shape, EXPRESSION_BY_ID.get(expression));
-      clock = 1;
+      engine = new BotEngine(RAYON, visualState, shape, EXPRESSION_BY_ID.get(expression));
+      clock = visualState === 'idle' ? 1 : 1.2;
     } else engine.setExpression(EXPRESSION_BY_ID.get(expression), clock);
     draw();
   }
   function react(type, product = '', quiet = false) {
     if (!REACTIONS[type] || (locked && !['error', 'success'].includes(type))) return;
+    activity();
     const reaction = REACTIONS[type];
+    reactionUntil = reaction.duration ? performance.now()+reaction.duration : Infinity;
     locked = type === 'ordering';
     clearTimeout(reactionTimer);
     setExpression(reaction.expression);
@@ -75,6 +85,30 @@ if (!document.getElementById('trek-mascot')) {
       setExpression('neutre');
     }, reaction.duration);
   }
+  function setVisualState(state) {
+    visualState=state;root.dataset.state=state;
+    engine.setLook(null,clock);
+    if (reduced) {engine=new BotEngine(RAYON,state,shape,EXPRESSION_BY_ID.get(expression));clock=state==='idle'?1:1.2;}
+    else engine.setState(state,clock);
+    draw();
+  }
+  function stopIdle() {
+    clearTimeout(idleTimer);
+    if (idling) {idling=false;setVisualState('idle');setExpression('neutre');}
+  }
+  function idleCycle(index=0) {
+    if (locked || performance.now()<reactionUntil || document.hidden || document.documentElement.classList.contains('intro-pending')) {idleTimer=setTimeout(()=>idleCycle(0),1000);return;}
+    idling=true;
+    const next=IDLE_SEQUENCE[index];
+    setVisualState(next.state);
+    idleTimer=setTimeout(()=>idleCycle((index+1)%IDLE_SEQUENCE.length),next.duration);
+  }
+  function activity() {stopIdle();idleTimer=setTimeout(()=>idleCycle(0),IDLE_DELAY);}
+  for (const event of ['pointerdown','pointermove','keydown','input','scroll']) document.addEventListener(event,activity,{passive:true});
+  document.addEventListener('visibilitychange',()=>{stopIdle();if(!document.hidden)activity();});
+  addEventListener('pagehide',stopIdle);
+  addEventListener('pageshow',activity);
+  activity();
   function geometry() {
     const view = window.visualViewport;
     const size = root.getBoundingClientRect().width;
@@ -157,7 +191,7 @@ if (!document.getElementById('trek-mascot')) {
   });
   let gazeAt = 0;
   document.addEventListener('pointermove', event => {
-    if (reduced || document.hidden || performance.now() - gazeAt < 80) return;
+    if (visualState !== 'idle' || reduced || document.hidden || performance.now() - gazeAt < 80) return;
     gazeAt = performance.now();
     const rect = root.getBoundingClientRect();
     engine.setLook({yaw: Math.max(-26, Math.min(26, (event.clientX - rect.x - rect.width / 2) / innerWidth * 52)), pitch: Math.max(-18, Math.min(18, -(event.clientY - rect.y - rect.height / 2) / innerHeight * 36)), mix: .75, spin: 0, wander: .25}, clock);

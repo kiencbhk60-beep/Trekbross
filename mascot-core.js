@@ -1,4 +1,10 @@
 export const POSITION_KEY = 'trekkbross-mascot-position-v1';
+export const IDLE_DELAY = 8000;
+export const IDLE_SEQUENCE = [
+  {state:'wink',duration:1600},
+  {state:'thinking',duration:2600},
+  {state:'wide',duration:1800},
+];
 
 export const REACTIONS = {
   greeting: {expression: 'heureux', message: 'Mình là Bross. Kéo mình đến chỗ bạn thích nhé!', duration: 4200},
