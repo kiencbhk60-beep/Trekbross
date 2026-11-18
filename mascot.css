@@ -5,7 +5,7 @@
   font: 500 12px/1.6 'Be Vietnam Pro', Arial, sans-serif;
   transform: translate3d(var(--mascot-x, 12px), var(--mascot-y, 12px), 0);
 }
-.intro-pending body>#trek-mascot { visibility: visible; }
+.intro-pending body>#trek-mascot { display: none; visibility: hidden; }
 #trek-mascot.is-docking { visibility: hidden; }
 #trek-mascot .trek-mascot-body {
   display: block; width: 100%; height: 100%; padding: 0; margin: 0;

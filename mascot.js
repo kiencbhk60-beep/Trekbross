@@ -48,7 +48,7 @@ if (!document.getElementById('trek-mascot')) {
       clock = 1;
     }
     draw();
-    if (!reduced && !document.hidden) { last = 0; raf = requestAnimationFrame(tick); }
+    if (!reduced && !document.hidden && !document.documentElement.classList.contains('intro-pending')) { last = 0; raf = requestAnimationFrame(tick); }
   }
   function setExpression(id) {
     expression = EXPRESSION_BY_ID.has(id) ? id : 'neutre';
