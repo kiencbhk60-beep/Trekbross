@@ -1,0 +1,31 @@
+/* A short dissolve connects the brand pages and the storefront. */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: var(--paper, #fff);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms cubic-bezier(.22, 1, .36, 1);
+}
+
+html.page-entering::after,
+html.page-leaving::after {
+  opacity: 1;
+}
+
+html.page-entering::after {
+  transition: none;
+}
+
+html.page-leaving::after {
+  pointer-events: auto;
+  transition-duration: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html::after { display: none; }
+}
+
+html.motion-paused::after { display: none; }
