@@ -1,0 +1,70 @@
+/* Independent entrance: no selectors change the existing website. */
+.intro-pending body { overflow: hidden; background: #000; }
+.intro-pending body > :not(#trekkbross-intro) { visibility: hidden; }
+#trekkbross-intro[hidden] { display: none; }
+.trekk-intro {
+  --intro-ink: #e1e0cc;
+  --intro-gutter: clamp(12px, 2.08vw, 40px);
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  height: 100vh;
+  height: 100dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: max(var(--intro-gutter), env(safe-area-inset-top)) var(--intro-gutter) max(var(--intro-gutter), env(safe-area-inset-bottom));
+  color: var(--intro-ink);
+  background: #000;
+  font-family: "Be Vietnam Pro", Arial, sans-serif;
+}
+.intro-frame {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: clamp(16px, 2.2vw, 32px);
+  padding: 0 clamp(20px, 2.8vw, 48px) clamp(24px, 3vw, 48px);
+  background: #000 url("assets/intro/prisma-poster.jpg") center / cover no-repeat;
+}
+.intro-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; }
+.intro-gradient { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #0000004d, transparent 38%, #0009); }
+.intro-noise {
+  position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  opacity: .7; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.15' d='M0 0h180v180H0z'/%3E%3C/svg%3E");
+}
+.intro-nav { align-self: center; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px clamp(16px, 2.5vw, 40px); max-width: 100%; padding: 8px clamp(16px, 2.5vw, 32px); background: #000; border-radius: 0 0 24px 24px; }
+.intro-nav a { display: inline-flex; align-items: center; min-height: 40px; font-size: 12px; font-weight: 500; line-height: 1.5; color: #e1e0cccc; text-decoration: none; }
+.intro-nav a:hover { color: var(--intro-ink); }
+.intro-content { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); align-items: end; gap: 32px; margin-top: clamp(200px, 35svh, 500px); }
+.intro-title { font-family: "Oswald Variable", "Arial Narrow", Arial, sans-serif; font-size: clamp(44px, 11vw, 176px); font-weight: 700; line-height: .95; letter-spacing: -.055em; margin: 0; color: var(--intro-ink); }
+.intro-word { display: inline-block; }
+.intro-description { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-width: 0; }
+.intro-slogan { font-size: 12px; font-weight: 600; letter-spacing: .06em; line-height: 1.6; margin: 0 0 12px; color: var(--intro-ink); }
+.intro-copy { max-width: 440px; font-size: clamp(14px, 1.1vw, 16px); line-height: 1.65; color: #e1e0ccd9; margin: 0; }
+.intro-enter { display: inline-flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 100%; min-height: 52px; padding: 4px 4px 4px 20px; border: 0; border-radius: 999px; background: var(--intro-ink); color: #000; font: 600 14px/1.4 "Be Vietnam Pro", Arial, sans-serif; cursor: pointer; }
+.intro-enter > span { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #000; color: var(--intro-ink); transition: transform .25s ease; }
+.intro-enter:hover > span { transform: scale(1.07); }
+.intro-enter:disabled { cursor: wait; }
+.trekk-intro :is(a, button):focus-visible { outline: 3px solid #ef4d25; outline-offset: 5px; }
+.intro-play { position: absolute; top: 88px; right: 20px; display: grid; place-items: center; width: 44px; height: 44px; z-index: 1; border: 1px solid #e1e0cc80; border-radius: 50%; background: #0009; color: var(--intro-ink); cursor: pointer; }
+.intro-play[hidden] { display: none; }
+.intro-exit { position: fixed; inset: 0; z-index: 3; background: #000; transform: scaleY(0); transform-origin: bottom; pointer-events: none; }
+@media (max-width: 1023px) {
+  .intro-content { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: clamp(180px, 25svh, 320px); }
+  .intro-title { font-size: clamp(44px, 15vw, 140px); }
+  .intro-description { max-width: 520px; }
+}
+@media (max-width: 479px) {
+  .intro-nav { gap: 0 14px; padding: 6px 12px; border-radius: 0 0 16px 16px; }
+  .intro-nav a { font-size: 10px; min-height: 36px; }
+  .intro-play { top: 110px; }
+  .intro-content { gap: 24px; margin-top: 160px; }
+  .intro-title { font-size: 15vw; }
+  .intro-slogan { font-size: 11px; letter-spacing: .04em; }
+  .intro-enter { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .trekk-intro *, .trekk-intro *::before, .trekk-intro *::after { transition: none !important; } }
