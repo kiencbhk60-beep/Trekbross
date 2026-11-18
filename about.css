@@ -6368,11 +6368,9 @@ figcaption {
 /* ==========================================================================
    TREKKBROSS ABOUT US — FULL-WIDTH LUMENIS LAYOUT & VIETNAMESE TYPOGRAPHY
    ========================================================================== */
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Oswald:wght@500;600;700&display=swap");
-
-:root {
-  --_typrography---fonts--heading-font: "Be Vietnam Pro", "TASA Orbiter", sans-serif;
-  --_typrography---fonts--paragraph-font: "Be Vietnam Pro", Inter, sans-serif;
+:root, body {
+  --_typrography---fonts--heading-font: "Be Vietnam Pro", Arial, sans-serif;
+  --_typrography---fonts--paragraph-font: "Be Vietnam Pro", Arial, sans-serif;
   --_typrography---fonts--logo-font: "Oswald Variable", "Oswald", "Arial Narrow", Arial, sans-serif;
 }
 
@@ -6383,6 +6381,34 @@ html, body {
   background-color: var(--tokens--background-base);
   scroll-behavior: smooth;
 }
+
+body { line-height: 1.65; }
+h2, h3, h4, h5, h6, .h2-style { line-height: 1.25; }
+p { text-wrap: pretty; }
+a:focus-visible, button:focus-visible {
+  outline: 3px solid #ef4d25;
+  outline-offset: 4px;
+}
+[id] { scroll-margin-top: 88px; }
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 20px;
+  background: #fff;
+  color: #000;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: none; }
+.button-text-holder { height: 1.4em; gap: 0; }
+.button-text { line-height: 1.4; }
+.hero-button-holder { flex-wrap: wrap; }
+.hero-paragraph-container p { font-size: 16px; line-height: 1.65; }
+.hero-tagline { font-family: var(--_typrography---fonts--heading-font); font-size: clamp(18px, 2.1vw, 30px); font-weight: 500; line-height: 1.4; }
+.hero-links-holder .small-text { line-height: 1.5; }
+.hero { isolation: isolate; }
+.nav-link-wrapper:focus-within .nav-line { transform: scaleX(1) !important; }
 
 /* Ensure .container is ALWAYS 100% full viewport width like ovo-lumenis.webflow.io */
 .container {
@@ -6417,15 +6443,17 @@ html, body {
 .nav-line {
   height: 2px;
   background-color: #000;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
 /* Hero Section — Exact full-viewport 100vh edge-to-edge layout like Lumenis */
 .hero {
   z-index: 2;
   width: 100%;
-  height: 100vh;
-  min-height: 680px;
+  height: auto;
+  min-height: max(760px, 100svh);
   position: relative;
   display: block;
   overflow: hidden;
@@ -6440,7 +6468,7 @@ html, body {
 
 .hero-text-wrapper {
   width: 100%;
-  height: 100%;
+  min-height: calc(max(760px, 100svh) - 112px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -6458,12 +6486,12 @@ html, body {
 /* Monumental condensed display wordmark matching Lumenis height & proportion */
 .logo-hero-text {
   font-family: var(--_typrography---fonts--logo-font);
-  font-size: clamp(46px, 16.8vw, 260px);
+  font-size: clamp(46px, 16vw, 240px);
   line-height: 1.02;
   font-weight: 700;
   letter-spacing: -0.055em;
   text-transform: uppercase;
-  margin-left: -0.03em;
+  margin: 0;
   white-space: nowrap;
   max-width: 100%;
   display: block;
@@ -6483,6 +6511,7 @@ html, body {
   grid-column-gap: 70px;
   grid-row-gap: 40px;
   align-items: end;
+  margin-top: 64px;
 }
 
 #w-node-ba638e9e-8727-4279-6bf0-e31c14f7e2d2-270150cb {
@@ -6853,6 +6882,7 @@ html, body {
   }
   .hero-text-wrapper {
     padding-top: 24px;
+    min-height: 0;
     justify-content: space-between;
     gap: 32px;
   }
@@ -6860,10 +6890,10 @@ html, body {
     row-gap: 18px;
   }
   .logo-hero-text {
-    font-size: 18.3vw;
+    font-size: 17vw;
     letter-spacing: -0.038em;
     line-height: 0.96;
-    margin-left: -0.02em;
+    margin-left: 0;
   }
   .hero-links-holder {
     flex-direction: row;
@@ -6920,10 +6950,10 @@ html, body {
 
 @media screen and (max-width: 479px) {
   .logo-hero-text {
-    font-size: 18.2vw;
+    font-size: 17vw;
     letter-spacing: -0.038em;
     line-height: 0.96;
-    margin-left: -0.02em;
+    margin-left: 0;
   }
   .hero-links-holder {
     flex-direction: row;
@@ -6959,7 +6989,7 @@ html, body {
     font-size: 13px;
   }
   .footer-giant-word {
-    font-size: 18.2vw;
+    font-size: 17vw;
     letter-spacing: -0.038em;
   }
 }
@@ -6976,4 +7006,13 @@ html, body {
     opacity: 1 !important;
     transform: none !important;
   }
+  .sticky-services-holder { height: auto; }
+  .sticky-services { height: auto; position: static; padding: 24px; }
+  .services { height: auto; flex-direction: column; }
+  .services-text-holder { width: 100%; min-width: 0; height: auto; }
+  .services-title { position: static; }
+  .services-text-container { transform: none !important; }
+  .services-text { opacity: 1 !important; }
+  .services-images-holder { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; height: auto; }
+  .services-images { height: auto; aspect-ratio: 1122 / 1402; transform: none !important; }
 }

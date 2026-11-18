@@ -4,9 +4,10 @@
   const navMenu = document.getElementById("about-nav-menu");
 
   if (menuBtn && navMenu) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", (event) => {
       const open = navMenu.classList.toggle("is-open");
       menuBtn.setAttribute("aria-expanded", String(open));
+      if (open && event.detail === 0) navMenu.querySelector("a")?.focus();
     });
     navMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
@@ -18,6 +19,7 @@
       if (e.key === "Escape" && navMenu.classList.contains("is-open")) {
         navMenu.classList.remove("is-open");
         menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.focus();
       }
     });
   }
@@ -44,16 +46,8 @@
   const heroLogo = document.querySelector(".logo-hero-text");
   const loadTimeline = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-  if (heroLogo && typeof window.SplitText !== "undefined") {
-    const splitLogo = new SplitText(heroLogo, { type: "chars" });
-    loadTimeline.fromTo(
-      splitLogo.chars,
-      { opacity: 0, y: 120 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: { amount: 0.3 } },
-      0.05
-    );
-  } else if (heroLogo) {
-    loadTimeline.fromTo(heroLogo, { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.5 }, 0.05);
+  if (heroLogo) {
+    loadTimeline.fromTo(heroLogo, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
   }
 
   const animateOnLoadItems = gsap.utils.toArray(".animate-on-load");
@@ -63,26 +57,6 @@
       { opacity: 0, y: 65 },
       { opacity: 1, y: 0, duration: 0.8, stagger: { amount: 0.35 } },
       0.3
-    );
-  }
-
-  const navbar = document.querySelector(".navbar");
-  if (navbar) {
-    loadTimeline.fromTo(
-      navbar,
-      { yPercent: -100, backgroundColor: "rgba(255,255,255,0)" },
-      { yPercent: 0, backgroundColor: "rgba(255,255,255,0.96)", duration: 0.5 },
-      0.94
-    );
-  }
-
-  const navLinks = gsap.utils.toArray(".navbar .nav-link");
-  if (navLinks.length) {
-    loadTimeline.fromTo(
-      navLinks,
-      { yPercent: -100, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.2, stagger: { amount: 0.2 } },
-      1.16
     );
   }
 
@@ -163,18 +137,17 @@
   document.querySelectorAll(".nav-link-wrapper").forEach((wrapper) => {
     const line = wrapper.querySelector(".nav-line");
     if (!line) return;
-    gsap.set(line, { width: "0%", xPercent: 0 });
+    gsap.set(line, { scaleX: 0 });
     wrapper.addEventListener("mouseenter", () => {
       gsap.killTweensOf(line);
-      gsap.fromTo(line, { width: "0%", xPercent: 0 }, { width: "100%", xPercent: 0, duration: 0.7, ease: "expo.out" });
+      gsap.to(line, { scaleX: 1, duration: 0.3, ease: "power2.out" });
     });
     wrapper.addEventListener("mouseleave", () => {
       gsap.killTweensOf(line);
       gsap.to(line, {
-        xPercent: 100,
-        duration: 0.5,
-        ease: "expo.out",
-        onComplete: () => gsap.set(line, { width: "0%", xPercent: 0 })
+        scaleX: 0,
+        duration: 0.25,
+        ease: "power2.out"
       });
     });
   });
