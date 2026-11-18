@@ -119,6 +119,10 @@ try {
 
 let toastTimer, orderItems = [];
 
+function mascotEvent(type, product = '') {
+  window.dispatchEvent(new CustomEvent('trekbross:mascot', {detail: {type, product}}));
+}
+
 function notify(message) {
   const toast = $("#toast");
   if (!toast) return;
@@ -238,6 +242,7 @@ function add(key) {
   currentOrderKey = "";
   save();
   notify("Đã thêm " + products[key].name + " vào túi kính.");
+  mascotEvent('added', products[key].name);
 }
 
 function setQuantity(key, value) {
@@ -468,6 +473,7 @@ function orderError(field, message) {
 }
 
 function setSubmitError(message) {
+  if (message) mascotEvent('error');
   const node = $("#order-submit-error");
   if (!node) return;
   node.textContent = message || "";
@@ -475,6 +481,7 @@ function setSubmitError(message) {
 }
 
 function setSubmittingState(busy) {
+  if (busy) mascotEvent('ordering');
   submittingOrder = busy;
   const submitBtn = $("#order-submit-btn");
   const backBtn = $("#order-back");
@@ -692,6 +699,7 @@ orderForm.addEventListener("submit", async (event) => {
     $("#order-review").hidden = false;
     $("#order-review").focus();
     notify(`Đặt hàng thành công! Mã đơn: ${confirmedOrder.number}`);
+    mascotEvent('success');
     await loadCatalog();
   } catch {
     const errMsg = "Không kết nối được máy chủ đặt hàng. Giỏ hàng của bạn vẫn được giữ nguyên, vui lòng thử lại.";

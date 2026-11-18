@@ -1,0 +1,36 @@
+#trek-mascot {
+  --mascot-size: 84px;
+  position: fixed; left: 0; top: 0; width: var(--mascot-size); height: var(--mascot-size);
+  z-index: 1100; pointer-events: none; isolation: isolate;
+  font: 500 12px/1.6 'Be Vietnam Pro', Arial, sans-serif;
+  transform: translate3d(var(--mascot-x, 12px), var(--mascot-y, 12px), 0);
+}
+.intro-pending body>#trek-mascot { visibility: visible; }
+#trek-mascot.is-docking { visibility: hidden; }
+#trek-mascot .trek-mascot-body {
+  display: block; width: 100%; height: 100%; padding: 0; margin: 0;
+  border: 0; border-radius: 50%; background: transparent; color: #111;
+  cursor: grab; pointer-events: auto; touch-action: none;
+  user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+  transition: none;
+}
+#trek-mascot .trek-mascot-body:active { transform: none; }
+#trek-mascot.is-dragging .trek-mascot-body { cursor: grabbing; }
+#trek-mascot .trek-mascot-body:focus-visible { outline: 3px solid var(--accent, #ef4d25); outline-offset: 2px; }
+#trek-mascot svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 9px #161b1829); }
+#trek-mascot .trek-mascot-bubble {
+  position: absolute; left: var(--mascot-bubble-left, 0px); bottom: calc(100% + 6px);
+  width: min(220px, calc(100vw - 24px)); padding: 11px 14px;
+  border: 1px solid var(--line, #e0e0e0); border-radius: 14px 14px 14px 4px;
+  background: var(--paper, #fff); color: var(--ink, #1b1d1b);
+  box-shadow: 0 5px 20px #161b1812; pointer-events: none;
+  opacity: 0; transform: translateY(5px); transition: opacity .2s ease, transform .3s ease;
+}
+#trek-mascot.is-speaking .trek-mascot-bubble { opacity: 1; transform: none; }
+#trek-mascot.is-right .trek-mascot-bubble { border-radius: 14px 14px 4px 14px; }
+#trek-mascot.is-top .trek-mascot-bubble { bottom: auto; top: calc(100% + 6px); }
+#trek-mascot.is-dragging .trek-mascot-bubble { opacity: 0; }
+#trek-mascot .trek-mascot-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media(max-width:600px) { #trek-mascot { --mascot-size: 68px; } }
+@media(prefers-reduced-motion:reduce) { #trek-mascot .trek-mascot-bubble { transition: none; } }
+.motion-paused #trek-mascot .trek-mascot-bubble { transition: none; }
