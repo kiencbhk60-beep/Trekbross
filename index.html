@@ -3,6 +3,14 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <script>
+    // Only the root entrance is gated; hash/deep links and blocked storage fail open.
+    try {
+      if (!location.hash && !history.state?.trekkbrossIntroSeen && sessionStorage.getItem("trekkbross-intro-seen") !== "true") {
+        document.documentElement.classList.add("intro-pending");
+      }
+    } catch { /* The existing website stays accessible without storage. */ }
+  </script>
   <title>Về TREKKBROSS | Kính chống nắng trekking, leo núi và chạy bộ</title>
   <meta name="description" content="Khám phá TREKKBROSS, thương hiệu kính chống nắng dành cho người yêu trekking, leo núi, chạy bộ và những hành trình ngoài trời."/>
   <meta property="og:title" content="Về TREKKBROSS | Kính chống nắng trekking, leo núi và chạy bộ"/>
@@ -18,8 +26,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap"/>
   <link rel="stylesheet" href="about.css" type="text/css"/>
+  <link rel="stylesheet" href="intro.css"/>
 </head>
 <body>
+  <section id="trekkbross-intro" class="trekk-intro" aria-labelledby="intro-title" hidden>
+    <div class="intro-frame">
+      <video id="intro-video" class="intro-video" autoplay muted loop playsinline preload="metadata" poster="assets/intro/prisma-poster.jpg" aria-hidden="true" data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"></video>
+      <div class="intro-noise" aria-hidden="true"></div>
+      <div class="intro-gradient" aria-hidden="true"></div>
+      <nav class="intro-nav" aria-label="Điều hướng TREKKBROSS">
+        <a href="index.html">TRANG CHỦ</a>
+        <a href="about.html#about">CÂU CHUYỆN</a>
+        <a href="about.html#projects">HÀNH TRÌNH</a>
+        <a href="about.html#services">TINH THẦN</a>
+        <a href="shop.html#collection">BỘ SƯU TẬP</a>
+      </nav>
+      <button id="intro-play" class="intro-play" type="button" aria-label="Tạm dừng video" aria-controls="intro-video" aria-pressed="true">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg>
+      </button>
+      <div class="intro-content">
+        <h1 id="intro-title" class="intro-title"><span class="intro-word">TREKKBROSS</span></h1>
+        <div class="intro-description">
+          <div>
+            <p class="intro-slogan">MỖI HÀNH TRÌNH. MỘT TẦM NHÌN.</p>
+            <p class="intro-copy">Từ những cung đường trekking đến những đỉnh núi cao, TREKKBROSS đồng hành cùng bạn trên hành trình khám phá thế giới ngoài trời.</p>
+          </div>
+          <button id="intro-enter" class="intro-enter" type="button">BƯỚC VÀO TREKKBROSS<span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="intro-exit" aria-hidden="true"></div>
+  </section>
   <a class="skip-link" href="#main">Đến nội dung chính</a>
   <!-- NAVBAR -->
   <div class="fixed">
@@ -483,6 +520,6 @@
   <script src="vendor/gsap/SplitText.min.js"></script>
   <script src="vendor/gsap/ScrollTrigger.min.js"></script>
   <script src="vendor/gsap/Observer.min.js"></script>
-  <script src="about.js"></script>
+  <script src="intro.js" onerror="document.documentElement.classList.remove('intro-pending');document.getElementById('trekkbross-intro').remove();var s=document.createElement('script');s.src='about.js';document.body.append(s)"></script>
 </body>
 </html>
