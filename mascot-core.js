@@ -5,6 +5,21 @@ export const IDLE_SEQUENCE = [
   {state:'thinking',duration:2600},
   {state:'wide',duration:1800},
 ];
+export const IDLE_INTERLUDES = [
+  {state:'idle',expression:'curieux',duration:2000},
+  {state:'idle',expression:'heureux',duration:2200},
+  {state:'idle',expression:'hilare',duration:2200},
+  {state:'idle',expression:'surpris',duration:1800},
+  {state:'idle',expression:'timide',duration:2400},
+  {state:'idle',expression:'excite',duration:2000},
+  {state:'idle',expression:'fier',duration:2200},
+  {state:'idle',expression:'mefiant',duration:2000},
+];
+export function chooseIdleInterlude(previous=-1,random=Math.random) {
+  const size=IDLE_INTERLUDES.length;
+  const index=previous<0?Math.floor(random()*size):(previous+1+Math.floor(random()*(size-1)))%size;
+  return {index,step:IDLE_INTERLUDES[index],pause:2400+Math.round(random()*1600)};
+}
 
 export const REACTIONS = {
   greeting: {expression: 'heureux', message: 'Mình là Bross. Kéo mình đến chỗ bạn thích nhé!', duration: 4200},

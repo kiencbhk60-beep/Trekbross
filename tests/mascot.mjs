@@ -5,7 +5,13 @@ import {EXPRESSION_BY_ID} from '../vendor/bloub/expressions.js';
 import {SHAPE_BY_ID} from '../vendor/bloub/skins.js';
 
 const core = readFileSync(new URL('../mascot-core.js', import.meta.url), 'utf8');
-const {REACTIONS, IDLE_DELAY, IDLE_SEQUENCE, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} = await import('data:text/javascript;base64,' + Buffer.from(core).toString('base64'));
+const {REACTIONS, IDLE_DELAY, IDLE_SEQUENCE, IDLE_INTERLUDES, chooseIdleInterlude, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} = await import('data:text/javascript;base64,' + Buffer.from(core).toString('base64'));
+for (let previous=-1;previous<IDLE_INTERLUDES.length;previous++) for (const sample of [0,.5,.999]) {
+  const next=chooseIdleInterlude(previous,()=>sample);
+  assert.notEqual(next.index,previous);
+  assert(EXPRESSION_BY_ID.has(next.step.expression));
+  assert(next.pause>=2400&&next.pause<=4000);
+}
 assert.equal(IDLE_DELAY,8000);
 assert.deepEqual(IDLE_SEQUENCE.map(step=>step.state),['wink','thinking','wide']);
 for (const step of IDLE_SEQUENCE) {

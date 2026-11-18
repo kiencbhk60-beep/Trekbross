@@ -3,7 +3,7 @@ import {BotEngine} from './vendor/bloub/engine.js';
 import {EXPRESSION_BY_ID} from './vendor/bloub/expressions.js';
 import {SHAPE_BY_ID} from './vendor/bloub/skins.js';
 import {RAYON} from './vendor/bloub/repere.js';
-import {REACTIONS, POSITION_KEY, IDLE_DELAY, IDLE_SEQUENCE, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} from './mascot-core.js?v=20261118-2';
+import {REACTIONS, POSITION_KEY, IDLE_DELAY, IDLE_SEQUENCE, chooseIdleInterlude, viewportBounds, clampPosition, restorePosition, serializePosition, avoidControls} from './mascot-core.js?v=20261118-3';
 
 if (!document.getElementById('trek-mascot')) {
   const root = document.createElement('aside');
@@ -25,7 +25,7 @@ if (!document.getElementById('trek-mascot')) {
   let clock = 1, last = 0, lastDraw = 0, raf = 0, reactionTimer, positionFrame = 0;
   let reduced = false, locked = false, drag = null, suppressClick = false, dockVersion = 0;
   let bounds, position, greetingIndex = 0;
-  let visualState = 'idle', idleTimer, idling = false, reactionUntil = 0;
+  let visualState = 'idle', idleTimer, idling = false, reactionUntil = 0, previousInterlude = -1;
   root.dataset.state='idle';
 
   function draw() {
@@ -99,9 +99,17 @@ if (!document.getElementById('trek-mascot')) {
   function idleCycle(index=0) {
     if (locked || performance.now()<reactionUntil || document.hidden || document.documentElement.classList.contains('intro-pending')) {idleTimer=setTimeout(()=>idleCycle(0),1000);return;}
     idling=true;
+    if (index===IDLE_SEQUENCE.length) {
+      const {index:selected,step,pause}=chooseIdleInterlude(previousInterlude);
+      previousInterlude=selected;
+      setVisualState('idle');setExpression(step.expression);
+      idleTimer=setTimeout(()=>{setExpression('neutre');idleTimer=setTimeout(()=>idleCycle(0),pause);},step.duration);
+      return;
+    }
+    setExpression('neutre');
     const next=IDLE_SEQUENCE[index];
     setVisualState(next.state);
-    idleTimer=setTimeout(()=>idleCycle((index+1)%IDLE_SEQUENCE.length),next.duration);
+    idleTimer=setTimeout(()=>idleCycle(index+1),next.duration);
   }
   function activity() {stopIdle();idleTimer=setTimeout(()=>idleCycle(0),IDLE_DELAY);}
   for (const event of ['pointerdown','pointermove','keydown','input','scroll']) document.addEventListener(event,activity,{passive:true});
