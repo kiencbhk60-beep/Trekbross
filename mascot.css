@@ -16,7 +16,8 @@
 }
 #trek-mascot .trek-mascot-body:active { transform: none; }
 #trek-mascot.is-dragging .trek-mascot-body { cursor: grabbing; }
-#trek-mascot .trek-mascot-body:focus-visible { outline: 3px solid var(--accent, #ef4d25); outline-offset: 2px; }
+#trek-mascot .trek-mascot-body:focus-visible { outline: none; }
+#trek-mascot .trek-mascot-body:focus-visible::after { content: ""; position: absolute; bottom: -3px; left: calc(50% - 8px); width: 16px; height: 3px; border-radius: 2px; background: var(--ink, #1b1d1b); }
 #trek-mascot svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 9px #161b1829); }
 #trek-mascot .trek-mascot-bubble {
   position: absolute; left: var(--mascot-bubble-left, 0px); bottom: calc(100% + 6px);
