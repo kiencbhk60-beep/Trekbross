@@ -1,3 +1,20 @@
+// Explicit shop entry must win over a previously restored scroll position.
+(() => {
+  const isTopEntry = () => location.hash === "#top";
+  if (!isTopEntry()) return;
+  history.scrollRestoration = "manual";
+  const showShopTop = () => {
+    if (isTopEntry()) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
+  showShopTop();
+  requestAnimationFrame(showShopTop);
+  addEventListener("pageshow", () => {
+    showShopTop();
+    requestAnimationFrame(showShopTop);
+  });
+  addEventListener("hashchange", showShopTop);
+})();
+
 const SHOP_PRODUCT_MAP = {
   sandstone: "K-01",
   suncrest: "K-03",
